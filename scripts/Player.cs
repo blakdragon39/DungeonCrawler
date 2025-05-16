@@ -7,12 +7,12 @@ namespace DungeonCrawler.scripts;
 public partial class Player : Node3D {
 
     private const float MOVE_SPEED = 2.5f;
-    private const float ROTATE_SPEED = 20f;
+    private const float ROTATE_SPEED = 30f;
     
     private Vector3? moveTo;
     private float? rotateToRads;
 
-    private FacingDirection curDirection = FacingDirection.East; // todo get from level setup?
+    private Direction curDirection = Direction.North; // todo get from level setup?
 
     public override void _PhysicsProcess(double delta) {
         var deltaF = (float)delta;
@@ -43,7 +43,7 @@ public partial class Player : Node3D {
         if (moveTo != null || rotateToRads != null) return;
         
         if (Input.IsActionPressed(InputBindings.MoveForward)) {
-            var checkPos = Position + DirectionUtilities.GetForwardTile(curDirection);
+            var checkPos = Position + DirectionUtils.GetForwardTile(curDirection);
 
             if (level.CanMoveTo(checkPos)) {
                 moveTo = checkPos;
@@ -51,13 +51,13 @@ public partial class Player : Node3D {
         }
 
         if (Input.IsActionPressed(InputBindings.LookRight)) {
-            curDirection = DirectionUtilities.GetRight(curDirection);
-            rotateToRads = DirectionUtilities.GetRadsFor(curDirection);
+            curDirection = DirectionUtils.GetRight(curDirection);
+            rotateToRads = DirectionUtils.GetRadsFor(curDirection);
         }
 
         if (Input.IsActionPressed(InputBindings.LookLeft)) {
-            curDirection = DirectionUtilities.GetLeft(curDirection);
-            rotateToRads = DirectionUtilities.GetRadsFor(curDirection);
+            curDirection = DirectionUtils.GetLeft(curDirection);
+            rotateToRads = DirectionUtils.GetRadsFor(curDirection);
         }
     }
 }

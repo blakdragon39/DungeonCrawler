@@ -10,14 +10,13 @@ public enum GameState {
 
 public partial class GameStateMachine : Node3D {
 
-    private GameState currentState;
-    private DungeonLevel currentLevel;
-
     [Export] private Player player;
+    [Export] private DungeonLevel currentLevel; // todo probably instantiate dynamically, instead of from export
+    
+    private GameState currentState;
 
     public override void _Ready() {
         currentState = GameState.PlayerControl; // todo probably remove
-        currentLevel = GetNode<DungeonLevel>("DungeonLevel"); // todo probably instantiate dynamically, instead of existing in the scene tree
     }
     
     public override void _Process(double delta) {
