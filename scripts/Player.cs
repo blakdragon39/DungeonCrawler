@@ -1,5 +1,6 @@
 using Godot;
 using DungeonCrawler.scripts.bindings;
+using DungeonCrawler.scripts.utils;
 using Vector3 = Godot.Vector3;
 
 namespace DungeonCrawler.scripts;
@@ -35,6 +36,10 @@ public partial class Player : Node3D {
         }
     }
 
+    public void OnDungeonStart(DungeonLevel level) {
+        level.MoveTo(Position.ToVector3I());
+    }
+
     public void OnFrame(DungeonLevel level) {
         HandleInput(level);
     }
@@ -47,6 +52,7 @@ public partial class Player : Node3D {
 
             if (level.CanMoveTo(checkPos)) {
                 moveTo = checkPos;
+                level.MoveTo(moveTo.Value);
             }
         }
 

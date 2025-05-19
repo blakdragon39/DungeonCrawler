@@ -1,4 +1,5 @@
 using Godot;
+using System.Linq;
 
 namespace DungeonCrawler.scripts;
 
@@ -14,6 +15,10 @@ public partial class Minimap : Control {
     private Color WallColor = Colors.Red;
     private Color DividerColor = Colors.Black;
 
+    public override void _Ready() {
+        level.WalkedOnNewTile += () => QueueRedraw();
+    }
+
     public override void _Process(double delta) {
         Position = new Vector2(-(centerOn.Position.X * TileSize), -(centerOn.Position.Z * TileSize));
         playerIndicator.Rotation = -centerOn.Rotation.Y;
@@ -23,7 +28,7 @@ public partial class Minimap : Control {
         var xOffset = GetRect().Size.X / 2;
         var yOffset = GetRect().Size.Y / 2;
         
-        level.Ground.ForEach(tile => {
+        level.WalkedOnTiles.ToList().ForEach(tile => {
             var rect = new Rect2((tile.X * TileSize) + xOffset, (tile.Z * TileSize) + yOffset, TileSize, TileSize); 
             DrawRect(rect, Colors.Aqua);
             
