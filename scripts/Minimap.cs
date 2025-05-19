@@ -5,16 +5,26 @@ namespace DungeonCrawler.scripts;
 public partial class Minimap : Control {
 
     [Export] private DungeonLevel level;
+    [Export] private Control playerIndicator;
+    [Export] private Node3D centerOn;
 
-    private const float TileSize = 12f;
+    private const float TileSize = 14f;
     private const float WallSize = 2f;
     private const float DividerSize = 1f;
     private Color WallColor = Colors.Red;
     private Color DividerColor = Colors.Black;
-    
+
+    public override void _Process(double delta) {
+        Position = new Vector2(-(centerOn.Position.X * TileSize), -(centerOn.Position.Z * TileSize));
+        playerIndicator.Rotation = -centerOn.Rotation.Y;
+    }
+
     public override void _Draw() {
+        var xOffset = GetRect().Size.X / 2;
+        var yOffset = GetRect().Size.Y / 2;
+        
         level.Ground.ForEach(tile => {
-            var rect = new Rect2(tile.X * TileSize, tile.Z * TileSize, TileSize, TileSize); 
+            var rect = new Rect2((tile.X * TileSize) + xOffset, (tile.Z * TileSize) + yOffset, TileSize, TileSize); 
             DrawRect(rect, Colors.Aqua);
             
             var walls = level.GetWallsAroundTile(tile);
