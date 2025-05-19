@@ -46,15 +46,24 @@ public partial class Player : Node3D {
 
     private void HandleInput(DungeonLevel level) {
         if (moveTo != null || rotateToRads != null) return;
+
+        Vector3? checkPos = null;
         
         if (Input.IsActionPressed(InputBindings.MoveForward)) {
-            var checkPos = Position + DirectionUtils.GetForwardTile(curDirection);
-
-            if (level.CanMoveTo(checkPos)) {
-                moveTo = checkPos;
-                level.MoveTo(moveTo.Value);
-            }
+            checkPos = Position + DirectionUtils.GetForwardTile(curDirection);
+        } else if (Input.IsActionPressed(InputBindings.MoveBack)) {
+            checkPos = Position + DirectionUtils.GetBackwardsTile(curDirection);
+        } else if (Input.IsActionPressed(InputBindings.StrafeLeft)) {
+            checkPos = Position + DirectionUtils.GetLeftTile(curDirection);
+        } else if (Input.IsActionPressed(InputBindings.StrafeRight)) {
+            checkPos = Position + DirectionUtils.GetRightTile(curDirection);
         }
+        
+        if (checkPos != null && level.CanMoveTo(checkPos.Value)) {
+            moveTo = checkPos;
+            level.MoveTo(moveTo.Value);
+        }
+        
 
         if (Input.IsActionPressed(InputBindings.LookRight)) {
             curDirection = DirectionUtils.GetRight(curDirection);

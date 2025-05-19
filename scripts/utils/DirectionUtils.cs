@@ -1,6 +1,6 @@
 using Godot;
 
-namespace DungeonCrawler.scripts;
+namespace DungeonCrawler.scripts.utils;
 
 public enum Direction {
     North, South, East, West
@@ -53,6 +53,33 @@ public class DirectionUtils {
             Direction.East => ForwardTileConsts.East,
             Direction.South => ForwardTileConsts.South,
             Direction.West => ForwardTileConsts.West
+        };
+    }
+
+    public static Vector3 GetBackwardsTile(Direction direction) {
+        return direction switch {
+            Direction.North => ForwardTileConsts.South,
+            Direction.East => ForwardTileConsts.West,
+            Direction.South => ForwardTileConsts.North,
+            Direction.West => ForwardTileConsts.East
+        };
+    }
+    
+    public static Vector3 GetLeftTile(Direction direction) {
+        return direction switch {
+            Direction.North => ForwardTileConsts.West,
+            Direction.East => ForwardTileConsts.North,
+            Direction.South => ForwardTileConsts.East,
+            Direction.West => ForwardTileConsts.South
+        };
+    }
+    
+    public static Vector3 GetRightTile(Direction direction) {
+        return direction switch {
+            Direction.North => ForwardTileConsts.East,
+            Direction.East => ForwardTileConsts.South,
+            Direction.South => ForwardTileConsts.West,
+            Direction.West => ForwardTileConsts.North
         };
     }
 }
