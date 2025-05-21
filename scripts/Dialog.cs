@@ -9,8 +9,13 @@ public partial class Dialog : Control {
     [Export] private RichTextLabel nameField;
     [Export] private RichTextLabel dialogField;
 
+    private const float TYPING_TIME = 0.2f;
+    
     private Resource dialogResource;
     private string nextId;
+    
+    private string typingText;
+    private int typingIndex = 1;
     
     public void InitDialog(Resource resource) {
         dialogResource = resource;
@@ -18,9 +23,13 @@ public partial class Dialog : Control {
     }
     
     public void HandleInput() {
-        if (Input.IsActionJustPressed(InputBindings.AdvanceDialogue)) {
+        if (Input.IsActionJustPressed(InputBindings.AdvanceDialogue) && typingText == null) {
             ShowNextDialogLine();
         }
+    }
+
+    public override void _Process(double delta) {
+        TypeText();
     }
 
     private async void ShowNextDialogLine() {
@@ -28,11 +37,25 @@ public partial class Dialog : Control {
 
         if (line != null) {
             nameField.Text = line.Character;
-            dialogField.Text = line.Text;
+            typingText = line.Text;
             nextId = line.NextId;
         } else {
             EmitSignal(SignalName.DialogEnded);
             QueueFree();
         }
+    }
+
+    private async void TypeText() {
+        if (typingText == null) return;
+
+        dialogField.Text = typingText.Substring(0, typingIndex);
+        typingIndex += 1;
+
+        if (typingIndex > typingText.Length) {
+            typingText = null;
+            typingIndex = 1;
+        }
+
+        await ToSignal(GetTree().CreateTimer(TYPING_TIME), SceneTreeTimer.SignalName.Timeout);
     }
 }
