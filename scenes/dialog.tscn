@@ -1,0 +1,56 @@
+[gd_scene load_steps=4 format=3 uid="uid://b42rha1lvwvqi"]
+
+[ext_resource type="Script" uid="uid://dls1y66pen8tk" path="res://scripts/Dialog.cs" id="1_pkx4w"]
+
+[sub_resource type="Theme" id="Theme_0a082"]
+default_font_size = 26
+
+[sub_resource type="Theme" id="Theme_pkx4w"]
+default_font_size = 24
+
+[node name="Control" type="Control" node_paths=PackedStringArray("nameField", "dialogField")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_pkx4w")
+nameField = NodePath("Panel/Panel/NameText")
+dialogField = NodePath("Panel/DialogText")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 101.0
+offset_top = 365.0
+offset_right = -101.0
+offset_bottom = -33.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="Panel"]
+layout_mode = 0
+offset_top = -60.0
+offset_right = 300.0
+offset_bottom = -10.0
+
+[node name="NameText" type="RichTextLabel" parent="Panel/Panel"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 5.0
+offset_right = 280.0
+offset_bottom = 45.0
+theme = SubResource("Theme_0a082")
+text = "That's my name"
+
+[node name="DialogText" type="RichTextLabel" parent="Panel"]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 25.0
+offset_right = 925.0
+offset_bottom = 225.0
+theme = SubResource("Theme_pkx4w")
+text = "Hello world lorem ipsum and whatnot,"

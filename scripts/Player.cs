@@ -40,11 +40,7 @@ public partial class Player : Node3D {
         level.MoveTo(Position.ToVector3I());
     }
 
-    public void OnFrame(DungeonLevel level) {
-        HandleInput(level);
-    }
-
-    private void HandleInput(DungeonLevel level) {
+    public void HandleInput(DungeonLevel level) {
         if (moveTo != null || rotateToRads != null) return;
 
         Vector3? checkPos = null;

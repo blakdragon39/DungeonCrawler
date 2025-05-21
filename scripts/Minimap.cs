@@ -17,7 +17,7 @@ public partial class Minimap : Control {
     private Color DividerColor = Colors.Black;
 
     public override void _Ready() {
-        level.WalkedOnNewTile += () => QueueRedraw();
+        level.WalkedOnNewTile += QueueRedraw;
     }
 
     public override void _Process(double delta) {
