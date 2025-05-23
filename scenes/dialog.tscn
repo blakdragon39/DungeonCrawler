@@ -44,7 +44,6 @@ offset_top = 5.0
 offset_right = 280.0
 offset_bottom = 45.0
 theme = SubResource("Theme_0a082")
-text = "That's my name"
 
 [node name="DialogText" type="RichTextLabel" parent="Panel"]
 layout_mode = 0
@@ -53,4 +52,3 @@ offset_top = 25.0
 offset_right = 925.0
 offset_bottom = 225.0
 theme = SubResource("Theme_pkx4w")
-text = "Hello world lorem ipsum and whatnot,"

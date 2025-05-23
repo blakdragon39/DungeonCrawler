@@ -1,17 +1,20 @@
-[gd_scene load_steps=8 format=3 uid="uid://6lter8hmb8rs"]
+[gd_scene load_steps=11 format=3 uid="uid://6lter8hmb8rs"]
 
 [ext_resource type="Script" uid="uid://ts4kl3ey3w35" path="res://scripts/GameStateMachine.cs" id="1_8ho6b"]
 [ext_resource type="MeshLibrary" uid="uid://g7rak6iq1qcs" path="res://assets/environment.tres" id="1_c13y7"]
 [ext_resource type="Script" uid="uid://dfknpf68e4heu" path="res://scripts/Minimap.cs" id="2_cq4me"]
-[ext_resource type="PackedScene" uid="uid://b42rha1lvwvqi" path="res://scenes/dialog.tscn" id="2_gbqnl"]
 [ext_resource type="Texture2D" uid="uid://b1o18kr5w1tte" path="res://assets/Arrow.png" id="3_6yjpi"]
 [ext_resource type="Script" uid="uid://cahhksvhc82s5" path="res://scripts/DungeonLevel.cs" id="3_ph3nu"]
 [ext_resource type="Script" uid="uid://dbt4v3hl5xj4" path="res://scripts/Player.cs" id="4_4kmhl"]
+[ext_resource type="PackedScene" uid="uid://cllqg5k5vprl4" path="res://scenes/event_trigger_box.tscn" id="8_ckvwl"]
+[ext_resource type="Script" uid="uid://bnv3qv80yfaas" path="res://scripts/events/tutorial/TutorialEvent1.cs" id="8_nlqja"]
+[ext_resource type="PackedScene" uid="uid://b42rha1lvwvqi" path="res://scenes/dialog.tscn" id="9_nlqja"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ckvwl"]
 
 [node name="Dungeon" type="Node3D" node_paths=PackedStringArray("player", "currentLevel")]
 script = ExtResource("1_8ho6b")
 player = NodePath("Player")
-dialogScene = ExtResource("2_gbqnl")
 currentLevel = NodePath("Level")
 
 [node name="Panel" type="Panel" parent="."]
@@ -61,7 +64,7 @@ data = {
 script = ExtResource("3_ph3nu")
 metadata/_editor_floor_ = Vector3(0, 0, 0)
 
-[node name="Player" type="Node3D" parent="."]
+[node name="Player" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, 0.5)
 script = ExtResource("4_4kmhl")
 
@@ -69,3 +72,16 @@ script = ExtResource("4_4kmhl")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0, 0)
+shape = SubResource("BoxShape3D_ckvwl")
+
+[node name="EventTriggers" type="Node" parent="."]
+
+[node name="EventTriggerBox" parent="EventTriggers" instance=ExtResource("8_ckvwl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, -2.5)
+
+[node name="TutorialEvent1" type="Node" parent="EventTriggers/EventTriggerBox"]
+script = ExtResource("8_nlqja")
+dialogScene = ExtResource("9_nlqja")

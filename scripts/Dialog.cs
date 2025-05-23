@@ -2,6 +2,8 @@ using DialogueManagerRuntime;
 using DungeonCrawler.scripts.bindings;
 using Godot;
 
+namespace DungeonCrawler.scripts;
+
 public partial class Dialog : Control {
 
     [Signal] public delegate void DialogEndedEventHandler();
@@ -9,7 +11,7 @@ public partial class Dialog : Control {
     [Export] private RichTextLabel nameField;
     [Export] private RichTextLabel dialogField;
 
-    private const float TYPING_TIME = 0.2f;
+    private const float TYPING_TIME = 0.15f;
     
     private Resource dialogResource;
     private string nextId;
@@ -56,6 +58,7 @@ public partial class Dialog : Control {
             typingIndex = 1;
         }
 
+        // todo make this into utility function? will be useful in other places
         await ToSignal(GetTree().CreateTimer(TYPING_TIME), SceneTreeTimer.SignalName.Timeout);
     }
 }
