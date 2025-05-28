@@ -28,6 +28,8 @@ public partial class EventTrigger : Area3D {
             nextEvent.StartEvent();
         } else {
             // todo mark this even as complete and remove from game tree?
+            //   - might need to differentiate between events that can happen multiple times
+            //   - right now the event doesn't repeat because the list in this game node has already removed it
             GameStateMachine.Instance.ReturnPlayerControl();
         }
     }

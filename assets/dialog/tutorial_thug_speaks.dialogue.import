@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://cx8o0j5bhs2b6"
+path="res://.godot/imported/tutorial_thug_speaks.dialogue-ece038e6a661fcfb5d3778b38dd2a068.tres"
+
+[deps]
+
+source_file="res://assets/dialog/tutorial_thug_speaks.dialogue"
+dest_files=["res://.godot/imported/tutorial_thug_speaks.dialogue-ece038e6a661fcfb5d3778b38dd2a068.tres"]
+
+[params]
+
+defaults=true

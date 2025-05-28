@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://6lter8hmb8rs"]
+[gd_scene load_steps=16 format=3 uid="uid://6lter8hmb8rs"]
 
 [ext_resource type="Script" uid="uid://ts4kl3ey3w35" path="res://scripts/GameStateMachine.cs" id="1_8ho6b"]
 [ext_resource type="MeshLibrary" uid="uid://g7rak6iq1qcs" path="res://assets/environment.tres" id="1_c13y7"]
@@ -7,8 +7,13 @@
 [ext_resource type="Script" uid="uid://cahhksvhc82s5" path="res://scripts/DungeonLevel.cs" id="3_ph3nu"]
 [ext_resource type="Script" uid="uid://dbt4v3hl5xj4" path="res://scripts/Player.cs" id="4_4kmhl"]
 [ext_resource type="PackedScene" uid="uid://cllqg5k5vprl4" path="res://scenes/event_trigger_box.tscn" id="8_ckvwl"]
-[ext_resource type="Script" uid="uid://bnv3qv80yfaas" path="res://scripts/events/tutorial/TutorialEvent1.cs" id="8_nlqja"]
+[ext_resource type="Script" uid="uid://rdbccrf0ptt0" path="res://scripts/events/DialogEvent.cs" id="8_ej4tf"]
 [ext_resource type="PackedScene" uid="uid://b42rha1lvwvqi" path="res://scenes/dialog.tscn" id="9_nlqja"]
+[ext_resource type="Resource" uid="uid://cadax2vj6qpcv" path="res://assets/dialog/tutorial.dialogue" id="10_g2equ"]
+[ext_resource type="Script" uid="uid://cukftb2eqx5rd" path="res://scripts/events/tutorial/TriggerTutorialCombatEvent.cs" id="11_tbcdj"]
+[ext_resource type="Resource" uid="uid://jhiium6eqpy2" path="res://enemies/tutorial_thug.tres" id="12_0hilk"]
+[ext_resource type="PackedScene" uid="uid://bgg4v642ow4ks" path="res://scenes/enemy.tscn" id="12_tbcdj"]
+[ext_resource type="Resource" uid="uid://cx8o0j5bhs2b6" path="res://assets/dialog/tutorial_thug_speaks.dialogue" id="14_0hilk"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ckvwl"]
 
@@ -79,9 +84,26 @@ shape = SubResource("BoxShape3D_ckvwl")
 
 [node name="EventTriggers" type="Node" parent="."]
 
-[node name="EventTriggerBox" parent="EventTriggers" instance=ExtResource("8_ckvwl")]
+[node name="TutorialEventTrigger" parent="EventTriggers" instance=ExtResource("8_ckvwl")]
+process_mode = 4
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, -2.5)
+visible = false
 
-[node name="TutorialEvent1" type="Node" parent="EventTriggers/EventTriggerBox"]
-script = ExtResource("8_nlqja")
+[node name="TutorialEvent1" type="Node" parent="EventTriggers/TutorialEventTrigger"]
+script = ExtResource("8_ej4tf")
 dialogScene = ExtResource("9_nlqja")
+dialogResource = ExtResource("10_g2equ")
+
+[node name="TriggerCombatEvent" parent="EventTriggers" instance=ExtResource("8_ckvwl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0, -2.5)
+visible = false
+
+[node name="TriggerCombat" type="Node" parent="EventTriggers/TriggerCombatEvent"]
+script = ExtResource("11_tbcdj")
+enemy = ExtResource("12_0hilk")
+enemyScene = ExtResource("12_tbcdj")
+
+[node name="ThugSpeaks" type="Node" parent="EventTriggers/TriggerCombatEvent"]
+script = ExtResource("8_ej4tf")
+dialogScene = ExtResource("9_nlqja")
+dialogResource = ExtResource("14_0hilk")
