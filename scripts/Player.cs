@@ -1,5 +1,6 @@
 using Godot;
 using DungeonCrawler.scripts.bindings;
+using DungeonCrawler.scripts.components;
 using DungeonCrawler.scripts.utils;
 using Vector3 = Godot.Vector3;
 
@@ -11,27 +12,20 @@ public partial class Player : Node3D {
     private const float ROTATE_SPEED = 30f;
     
     private Vector3? moveTo;
-    private float? rotateToRads;
 
     private Direction curDirection = Direction.North; // todo get from level setup?
+    private Rotatable3D rotatable3D;
+
+    public override void _Ready() {
+        rotatable3D = this.GetChildOfType<Rotatable3D>();
+    }
 
     public override void _PhysicsProcess(double delta) {
-        var deltaF = (float)delta;
-        
         if (moveTo != null) {
-            Position = Position.MoveToward(moveTo.Value, deltaF * MOVE_SPEED);
+            Position = Position.MoveToward(moveTo.Value, (float)delta * MOVE_SPEED);
             
             if (Position == moveTo) {
                 moveTo = null;
-            }
-        }
-
-        if (rotateToRads != null) {
-            var newRotation = Mathf.LerpAngle(Rotation.Y, rotateToRads.Value, deltaF * ROTATE_SPEED);
-            if (Mathf.IsEqualApprox(Mathf.DegToRad(RotationDegrees.Y), newRotation, 0.001)) {
-                rotateToRads = null;
-            } else {
-                Rotation = Rotation.Lerp(new Vector3(RotationDegrees.X, newRotation, RotationDegrees.Z), deltaF * ROTATE_SPEED);
             }
         }
     }
@@ -41,7 +35,7 @@ public partial class Player : Node3D {
     }
 
     public void HandleInput(DungeonLevel level) {
-        if (moveTo != null || rotateToRads != null) return;
+        if (moveTo != null || rotatable3D.IsRotating) return;
 
         Vector3? checkPos = null;
         
@@ -63,12 +57,12 @@ public partial class Player : Node3D {
 
         if (Input.IsActionPressed(InputBindings.LookRight)) {
             curDirection = DirectionUtils.GetRight(curDirection);
-            rotateToRads = DirectionUtils.GetRadsFor(curDirection);
+            rotatable3D.RotateWithSpeed(curDirection, ROTATE_SPEED);
         }
 
         if (Input.IsActionPressed(InputBindings.LookLeft)) {
             curDirection = DirectionUtils.GetLeft(curDirection);
-            rotateToRads = DirectionUtils.GetRadsFor(curDirection);
+            rotatable3D.RotateWithSpeed(curDirection, ROTATE_SPEED);
         }
     }
 }

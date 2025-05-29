@@ -11,4 +11,7 @@ public static class GodotExt {
 
     public static List<T> GetChildrenOfType<T>(this Node node) =>
         node.GetChildren().OfType<T>().ToList();
+
+    public static T GetChildOfType<T>(this Node node) =>
+        node.GetChildrenOfType<T>().First();
 }
