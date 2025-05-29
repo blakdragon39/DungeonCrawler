@@ -1,9 +1,9 @@
 using Godot;
 
-namespace DungeonCrawler.scripts.enemies;
+namespace DungeonCrawler.scripts.resources;
 
 [GlobalClass]
-public partial class Enemy : Resource {
+public partial class EnemyResource : Resource {
 
     [Export] public Texture2D Sprite;
     [Export] public int MaxHealth;

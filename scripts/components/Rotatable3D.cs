@@ -5,6 +5,7 @@ namespace DungeonCrawler.scripts.components;
 
 public partial class Rotatable3D : Node {
 
+    public Direction CurDirection { get; private set; }
     public bool IsRotating => rotateToRads != null;
 
     private Node3D parent;
@@ -30,7 +31,13 @@ public partial class Rotatable3D : Node {
     }
 
     public void RotateWithSpeed(Direction direction, float speed) {
+        CurDirection = direction;
         rotateToRads = DirectionUtils.GetRadsFor(direction);
         rotateSpeed = speed;
+    }
+
+    public void Face(Direction direction) {
+        CurDirection = direction;
+        parent.Rotation = new Vector3(parent.RotationDegrees.X, DirectionUtils.GetRadsFor(direction), parent.RotationDegrees.Z);
     }
 }

@@ -12,12 +12,12 @@ public partial class Player : Node3D {
     private const float ROTATE_SPEED = 30f;
     
     private Vector3? moveTo;
-
-    private Direction curDirection = Direction.North; // todo get from level setup?
+    
     private Rotatable3D rotatable3D;
 
     public override void _Ready() {
         rotatable3D = this.GetChildOfType<Rotatable3D>();
+        rotatable3D.Face(Direction.North);
     }
 
     public override void _PhysicsProcess(double delta) {
@@ -40,29 +40,27 @@ public partial class Player : Node3D {
         Vector3? checkPos = null;
         
         if (Input.IsActionPressed(InputBindings.MoveForward)) {
-            checkPos = Position + DirectionUtils.GetForwardTile(curDirection);
+            checkPos = Position + DirectionUtils.GetForwardTile(rotatable3D.CurDirection);
         } else if (Input.IsActionPressed(InputBindings.MoveBack)) {
-            checkPos = Position + DirectionUtils.GetBackwardsTile(curDirection);
+            checkPos = Position + DirectionUtils.GetBackwardsTile(rotatable3D.CurDirection);
         } else if (Input.IsActionPressed(InputBindings.StrafeLeft)) {
-            checkPos = Position + DirectionUtils.GetLeftTile(curDirection);
+            checkPos = Position + DirectionUtils.GetLeftTile(rotatable3D.CurDirection);
         } else if (Input.IsActionPressed(InputBindings.StrafeRight)) {
-            checkPos = Position + DirectionUtils.GetRightTile(curDirection);
+            checkPos = Position + DirectionUtils.GetRightTile(rotatable3D.CurDirection);
         }
         
-        if (checkPos != null && level.CanMoveTo(checkPos.Value)) {
+        if (checkPos != null && level.CanMoveTo(checkPos.Value.ToVector3I())) {
             moveTo = checkPos;
-            level.MoveTo(moveTo.Value);
+            level.MoveTo(moveTo.Value.ToVector3I());
         }
         
 
         if (Input.IsActionPressed(InputBindings.LookRight)) {
-            curDirection = DirectionUtils.GetRight(curDirection);
-            rotatable3D.RotateWithSpeed(curDirection, ROTATE_SPEED);
+            rotatable3D.RotateWithSpeed(DirectionUtils.GetRight(rotatable3D.CurDirection), ROTATE_SPEED);
         }
 
         if (Input.IsActionPressed(InputBindings.LookLeft)) {
-            curDirection = DirectionUtils.GetLeft(curDirection);
-            rotatable3D.RotateWithSpeed(curDirection, ROTATE_SPEED);
+            rotatable3D.RotateWithSpeed(DirectionUtils.GetLeft(rotatable3D.CurDirection), ROTATE_SPEED);
         }
     }
 }

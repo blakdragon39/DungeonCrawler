@@ -10,24 +10,33 @@ public partial class DungeonLevel : GridMap {
     [Signal] public delegate void WalkedOnNewTileEventHandler();
     
     public HashSet<Vector3I> WalkedOnTiles { get; private set; }
+    public List<Enemy> Enemies { get; private set; }
 
     private const int GROUND_LEVEL = -1;
     private const int WALL_LEVEL = 0;
     
     public override void _Ready() {
         WalkedOnTiles = new HashSet<Vector3I>();
+        Enemies = new List<Enemy>();
     }
 
     // todo also check other things, like enemies or chests, because grid blocks cannot have scripts
-    public bool CanMoveTo(Vector3 pos) {
-        return GetCellItem(pos.ToVector3I()) == InvalidCellItem;
+    public bool CanMoveTo(Vector3I pos) {
+        if (GetCellItem(pos) != InvalidCellItem) return false;
+        if (Enemies.Any(enemy => enemy.Position.ToVector3I() == pos)) return false;
+
+        return true;
     }
 
-    public void MoveTo(Vector3 pos) {
-        var wasNewTile = WalkedOnTiles.Add(pos.ToVector3I());
+    public void MoveTo(Vector3I pos) {
+        var wasNewTile = WalkedOnTiles.Add(pos);
         if (wasNewTile) {
             EmitSignal(SignalName.WalkedOnNewTile);
         }
+    }
+
+    public void AddEnemy(Enemy enemy) {
+        Enemies.Add(enemy);
     }
 
     public List<Direction> GetWallsAroundTile(Vector3 groundTile) {

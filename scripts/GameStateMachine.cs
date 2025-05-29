@@ -12,7 +12,7 @@ public partial class GameStateMachine : Node3D {
     public static GameStateMachine Instance { get; private set; }
 
     [Export] private Player player;
-    [Export] private DungeonLevel currentLevel; // todo probably instantiate dynamically, instead of from export
+    [Export] public DungeonLevel CurrentLevel { get; private set; } // todo probably instantiate dynamically, instead of from export
     
     private GameState currentState;
     private Dialog dialog;
@@ -21,13 +21,13 @@ public partial class GameStateMachine : Node3D {
         Instance = this;
         
         currentState = GameState.PlayerControl; // todo probably remove
-        player.OnDungeonStart(currentLevel); // todo also probably doesn't belong in Ready of the whole damn thing
+        player.OnDungeonStart(CurrentLevel); // todo also probably doesn't belong in Ready of the whole damn thing
     }
     
     public override void _Process(double delta) {
         switch (currentState) {
             case GameState.PlayerControl:
-                player.HandleInput(currentLevel);
+                player.HandleInput(CurrentLevel);
                 break;
             case GameState.Dialog:
                 dialog.HandleInput();
