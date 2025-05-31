@@ -1,10 +1,11 @@
 using DialogueManagerRuntime;
 using DungeonCrawler.scripts.bindings;
+using DungeonCrawler.scripts.components;
 using Godot;
 
 namespace DungeonCrawler.scripts;
 
-public partial class Dialog : Control {
+public partial class Dialog : Control, IHandlesInput {
 
     [Signal] public delegate void DialogEndedEventHandler();
     
@@ -24,14 +25,14 @@ public partial class Dialog : Control {
         ShowNextDialogLine();
     }
     
+    public override void _Process(double delta) {
+        TypeText();
+    }
+    
     public void HandleInput() {
         if (Input.IsActionJustPressed(InputBindings.AdvanceDialogue) && typingText == null) {
             ShowNextDialogLine();
         }
-    }
-
-    public override void _Process(double delta) {
-        TypeText();
     }
 
     private async void ShowNextDialogLine() {

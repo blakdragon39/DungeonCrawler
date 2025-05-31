@@ -12,8 +12,8 @@
 [ext_resource type="PackedScene" uid="uid://b42rha1lvwvqi" path="res://scenes/dialog.tscn" id="9_nlqja"]
 [ext_resource type="Resource" uid="uid://cadax2vj6qpcv" path="res://assets/dialog/tutorial.dialogue" id="10_g2equ"]
 [ext_resource type="Script" uid="uid://cukftb2eqx5rd" path="res://scripts/events/tutorial/TriggerTutorialCombatEvent.cs" id="11_tbcdj"]
-[ext_resource type="Resource" uid="uid://jhiium6eqpy2" path="res://enemies/tutorial_thug.tres" id="12_0hilk"]
 [ext_resource type="PackedScene" uid="uid://bgg4v642ow4ks" path="res://scenes/enemy.tscn" id="12_tbcdj"]
+[ext_resource type="Resource" uid="uid://dup78wkp8nlg4" path="res://enemies/tutorial_thug.tres" id="13_e13mp"]
 [ext_resource type="Resource" uid="uid://cx8o0j5bhs2b6" path="res://assets/dialog/tutorial_thug_speaks.dialogue" id="14_0hilk"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ckvwl"]
@@ -104,7 +104,7 @@ visible = false
 
 [node name="TriggerCombat" type="Node" parent="EventTriggers/TriggerCombatEvent"]
 script = ExtResource("11_tbcdj")
-enemy = ExtResource("12_0hilk")
+enemyResource = ExtResource("13_e13mp")
 enemyScene = ExtResource("12_tbcdj")
 
 [node name="ThugSpeaks" type="Node" parent="EventTriggers/TriggerCombatEvent"]

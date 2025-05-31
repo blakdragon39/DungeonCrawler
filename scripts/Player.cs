@@ -6,8 +6,8 @@ using Vector3 = Godot.Vector3;
 
 namespace DungeonCrawler.scripts;
 
-public partial class Player : Node3D {
-
+public partial class Player : Node3D, IHandlesInput {
+    
     private const float MOVE_SPEED = 2.5f;
     private const float ROTATE_SPEED = 30f;
     
@@ -34,9 +34,15 @@ public partial class Player : Node3D {
         level.MoveTo(Position.ToVector3I());
     }
 
-    public void HandleInput(DungeonLevel level) {
+    public void HandleInput() {
         if (moveTo != null || rotatable3D.IsRotating) return;
 
+        HandleMoveInput();
+        HandleRotateInput();
+        HandleMenuInput();
+    }
+
+    private void HandleMoveInput() {
         Vector3? checkPos = null;
         
         if (Input.IsActionPressed(InputBindings.MoveForward)) {
@@ -49,18 +55,25 @@ public partial class Player : Node3D {
             checkPos = Position + DirectionUtils.GetRightTile(rotatable3D.CurDirection);
         }
         
-        if (checkPos != null && level.CanMoveTo(checkPos.Value.ToVector3I())) {
+        if (checkPos != null && GameStateMachine.Instance.CurrentLevel.CanMoveTo(checkPos.Value.ToVector3I())) {
             moveTo = checkPos;
-            level.MoveTo(moveTo.Value.ToVector3I());
-        }
-        
+            GameStateMachine.Instance.CurrentLevel.MoveTo(moveTo.Value.ToVector3I());
+        } // todo else do "bump" animation to show you tried but it didn't work
+    }
 
+    private void HandleRotateInput() {
         if (Input.IsActionPressed(InputBindings.LookRight)) {
             rotatable3D.RotateWithSpeed(DirectionUtils.GetRight(rotatable3D.CurDirection), ROTATE_SPEED);
         }
 
         if (Input.IsActionPressed(InputBindings.LookLeft)) {
             rotatable3D.RotateWithSpeed(DirectionUtils.GetLeft(rotatable3D.CurDirection), ROTATE_SPEED);
+        }
+    }
+
+    private void HandleMenuInput() {
+        if (Input.IsActionJustPressed(InputBindings.OpenMenu)) {
+            
         }
     }
 }

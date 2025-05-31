@@ -1,4 +1,6 @@
+using DungeonCrawler.scripts.components;
 using Godot;
+using System.Collections.Generic;
 
 namespace DungeonCrawler.scripts;
 
@@ -16,28 +18,30 @@ public partial class GameStateMachine : Node3D {
     
     private GameState currentState;
     private Dialog dialog;
+    private Dictionary<GameState, IHandlesInput> inputtables = new();
 
     public override void _Ready() {
         Instance = this;
         
-        currentState = GameState.PlayerControl; // todo probably remove
-        player.OnDungeonStart(CurrentLevel); // todo also probably doesn't belong in Ready of the whole damn thing
+        currentState = GameState.PlayerControl;
+        player.OnDungeonStart(CurrentLevel); // todo probably doesn't belong in Ready of the whole damn thing
+
+        inputtables[GameState.PlayerControl] = player;
     }
     
+    /**
+     * _Process of GameStateMachine should only call HandleInput for whatever state the game is currently in.
+     * _Process of any other node should not handle input, and should focus on handling their own state, which 
+     *     shouldn't be using anything from the GameStateMachine instance.
+     */
     public override void _Process(double delta) {
-        switch (currentState) {
-            case GameState.PlayerControl:
-                player.HandleInput(CurrentLevel);
-                break;
-            case GameState.Dialog:
-                dialog.HandleInput();
-                break;
-        }
+        inputtables[currentState].HandleInput();
     }
 
     public void SetGameStateDialog(Dialog newDialog) {
         // todo call clear state before any change? can you do that with a property setter? 
         dialog = newDialog;
+        inputtables[GameState.Dialog] = dialog;
         currentState = GameState.Dialog;
     }
 

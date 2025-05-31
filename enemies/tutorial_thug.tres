@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Enemy" load_steps=3 format=3 uid="uid://jhiium6eqpy2"]
+[gd_resource type="Resource" script_class="EnemyResource" load_steps=3 format=3 uid="uid://dup78wkp8nlg4"]
 
 [ext_resource type="Script" uid="uid://0pyox5f4qj2r" path="res://scripts/resources/EnemyResource.cs" id="1_67iwi"]
 [ext_resource type="Texture2D" uid="uid://1l1he66skmyy" path="res://assets/soldier.png" id="1_vq3bn"]
