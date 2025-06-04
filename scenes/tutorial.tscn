@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://6lter8hmb8rs"]
+[gd_scene load_steps=18 format=3 uid="uid://6lter8hmb8rs"]
 
 [ext_resource type="Script" uid="uid://ts4kl3ey3w35" path="res://scripts/GameStateMachine.cs" id="1_8ho6b"]
 [ext_resource type="MeshLibrary" uid="uid://g7rak6iq1qcs" path="res://assets/environment.tres" id="1_c13y7"]
@@ -15,13 +15,15 @@
 [ext_resource type="PackedScene" uid="uid://bgg4v642ow4ks" path="res://scenes/enemy.tscn" id="12_tbcdj"]
 [ext_resource type="Resource" uid="uid://dup78wkp8nlg4" path="res://enemies/tutorial_thug.tres" id="13_e13mp"]
 [ext_resource type="Resource" uid="uid://cx8o0j5bhs2b6" path="res://assets/dialog/tutorial_thug_speaks.dialogue" id="14_0hilk"]
+[ext_resource type="PackedScene" uid="uid://r7bjdnhw1uo7" path="res://scenes/battle_ux.tscn" id="16_e13mp"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ckvwl"]
 
-[node name="Dungeon" type="Node3D" node_paths=PackedStringArray("player", "CurrentLevel")]
+[node name="Dungeon" type="Node3D" node_paths=PackedStringArray("CurrentLevel", "player")]
 script = ExtResource("1_8ho6b")
-player = NodePath("Player")
 CurrentLevel = NodePath("Level")
+player = NodePath("Player")
+dungeonMenuScene = ExtResource("16_e13mp")
 
 [node name="Panel" type="Panel" parent="."]
 clip_children = 2

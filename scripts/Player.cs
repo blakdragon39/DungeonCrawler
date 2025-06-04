@@ -73,7 +73,7 @@ public partial class Player : Node3D, IHandlesInput {
 
     private void HandleMenuInput() {
         if (Input.IsActionJustPressed(InputBindings.OpenMenu)) {
-            
+            GameStateMachine.Instance.OpenDungeonMenu();
         }
     }
 }

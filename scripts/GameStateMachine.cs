@@ -7,17 +7,19 @@ namespace DungeonCrawler.scripts;
 public enum GameState {
     PlayerControl,
     Dialog,
+    DungeonMenu,
 }
 
 public partial class GameStateMachine : Node3D {
     
     public static GameStateMachine Instance { get; private set; }
 
-    [Export] private Player player;
     [Export] public DungeonLevel CurrentLevel { get; private set; } // todo probably instantiate dynamically, instead of from export
     
+    [Export] private Player player;
+    [Export] private PackedScene dungeonMenuScene; 
+    
     private GameState currentState;
-    private Dialog dialog;
     private Dictionary<GameState, IHandlesInput> inputtables = new();
 
     public override void _Ready() {
@@ -39,10 +41,15 @@ public partial class GameStateMachine : Node3D {
     }
 
     public void SetGameStateDialog(Dialog newDialog) {
-        // todo call clear state before any change? can you do that with a property setter? 
-        dialog = newDialog;
-        inputtables[GameState.Dialog] = dialog;
+        inputtables[GameState.Dialog] = newDialog;
         currentState = GameState.Dialog;
+    }
+
+    public void OpenDungeonMenu() {
+        var menu = dungeonMenuScene.Instantiate<DungeonMenu>();
+        AddChild(menu);
+        inputtables[GameState.DungeonMenu] = menu;
+        currentState = GameState.DungeonMenu;
     }
 
     public void ReturnPlayerControl() {
@@ -51,7 +58,7 @@ public partial class GameStateMachine : Node3D {
     }
 
     private void ClearState() {
-        dialog = null;
-        // todo other.. things? Not sure if this is a good idea
+        inputtables[GameState.Dialog] = null;
+        inputtables[GameState.DungeonMenu] = null;
     }
 }
