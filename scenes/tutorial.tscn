@@ -1,8 +1,9 @@
-[gd_scene load_steps=18 format=3 uid="uid://6lter8hmb8rs"]
+[gd_scene load_steps=19 format=3 uid="uid://6lter8hmb8rs"]
 
 [ext_resource type="Script" uid="uid://ts4kl3ey3w35" path="res://scripts/GameStateMachine.cs" id="1_8ho6b"]
 [ext_resource type="MeshLibrary" uid="uid://g7rak6iq1qcs" path="res://assets/environment.tres" id="1_c13y7"]
 [ext_resource type="Script" uid="uid://dfknpf68e4heu" path="res://scripts/Minimap.cs" id="2_cq4me"]
+[ext_resource type="PackedScene" uid="uid://bvoakxmplyars" path="res://scenes/game_menu.tscn" id="2_e13mp"]
 [ext_resource type="Texture2D" uid="uid://b1o18kr5w1tte" path="res://assets/Arrow.png" id="3_6yjpi"]
 [ext_resource type="Script" uid="uid://cahhksvhc82s5" path="res://scripts/DungeonLevel.cs" id="3_ph3nu"]
 [ext_resource type="Script" uid="uid://dbt4v3hl5xj4" path="res://scripts/Player.cs" id="4_4kmhl"]
@@ -15,15 +16,15 @@
 [ext_resource type="PackedScene" uid="uid://bgg4v642ow4ks" path="res://scenes/enemy.tscn" id="12_tbcdj"]
 [ext_resource type="Resource" uid="uid://dup78wkp8nlg4" path="res://enemies/tutorial_thug.tres" id="13_e13mp"]
 [ext_resource type="Resource" uid="uid://cx8o0j5bhs2b6" path="res://assets/dialog/tutorial_thug_speaks.dialogue" id="14_0hilk"]
-[ext_resource type="PackedScene" uid="uid://r7bjdnhw1uo7" path="res://scenes/battle_ux.tscn" id="16_e13mp"]
+[ext_resource type="Script" uid="uid://cckv3yr252m6l" path="res://scripts/menus/DungeonMenu.cs" id="17_vrdqu"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ckvwl"]
 
-[node name="Dungeon" type="Node3D" node_paths=PackedStringArray("CurrentLevel", "player")]
+[node name="Dungeon" type="Node3D" node_paths=PackedStringArray("CurrentLevel", "player", "dungeonMenu")]
 script = ExtResource("1_8ho6b")
 CurrentLevel = NodePath("Level")
 player = NodePath("Player")
-dungeonMenuScene = ExtResource("16_e13mp")
+dungeonMenu = NodePath("DungeonMenu")
 
 [node name="Panel" type="Panel" parent="."]
 clip_children = 2
@@ -113,3 +114,13 @@ enemyScene = ExtResource("12_tbcdj")
 script = ExtResource("8_ej4tf")
 dialogScene = ExtResource("9_nlqja")
 dialogResource = ExtResource("14_0hilk")
+
+[node name="DungeonMenu" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 30.0
+offset_top = 30.0
+offset_right = 30.0
+offset_bottom = 30.0
+script = ExtResource("17_vrdqu")
+gameMenuScene = ExtResource("2_e13mp")

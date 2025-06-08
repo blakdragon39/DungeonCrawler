@@ -1,4 +1,5 @@
 using DungeonCrawler.scripts.components;
+using DungeonCrawler.scripts.menus;
 using Godot;
 using System.Collections.Generic;
 
@@ -17,7 +18,7 @@ public partial class GameStateMachine : Node3D {
     [Export] public DungeonLevel CurrentLevel { get; private set; } // todo probably instantiate dynamically, instead of from export
     
     [Export] private Player player;
-    [Export] private PackedScene dungeonMenuScene; 
+    [Export] private DungeonMenu dungeonMenu;
     
     private GameState currentState;
     private Dictionary<GameState, IHandlesInput> inputtables = new();
@@ -29,6 +30,7 @@ public partial class GameStateMachine : Node3D {
         player.OnDungeonStart(CurrentLevel); // todo probably doesn't belong in Ready of the whole damn thing
 
         inputtables[GameState.PlayerControl] = player;
+        inputtables[GameState.DungeonMenu] = dungeonMenu;
     }
     
     /**
@@ -45,11 +47,9 @@ public partial class GameStateMachine : Node3D {
         currentState = GameState.Dialog;
     }
 
-    public void OpenDungeonMenu() {
-        var menu = dungeonMenuScene.Instantiate<DungeonMenu>();
-        AddChild(menu);
-        inputtables[GameState.DungeonMenu] = menu;
+    public void OpenGameMenu() {
         currentState = GameState.DungeonMenu;
+        dungeonMenu.OpenMenu();
     }
 
     public void ReturnPlayerControl() {
