@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace DungeonCrawler.scripts.menus;
 
-public partial class GameMenu : Node, IHandlesInput {
+public partial class GameMenu : Control, IHandlesInput {
 
     private const float MOVE_SPEED = 400f;
 
@@ -23,25 +23,25 @@ public partial class GameMenu : Node, IHandlesInput {
     public override void _Ready() {
         highlight = GetNode<Control>("HighlightTexture");
         yOffset = labels[0].Position.Y - highlight.Position.Y;
-        GD.Print($"Label.y: {labels[0].Position.Y}, highlight.y: {highlight.Position.Y}, yOffset: {yOffset}");
     }
     
     public void Init(List<MenuItem> menuItems) {
+        items = menuItems;
         var textLabels = this.GetChildrenOfType<RichTextLabel>();
         for (int i = 0; i < 5; i += 1) {
             if (menuItems.Count > i) {
                 labels.Add(textLabels[i]);
                 labels[i].Text = menuItems[i].Label;
             } else {
-                textLabels[i].Text = ""; // todo deactivate somehow
+                textLabels[i].Text = "";
             }
         }
     }
-
-    public override void _Process(double delta) {
+    
+    public override void _PhysicsProcess(double delta) {
         if (moveToIndex == -1) return;
 
-        var movingTo = new Vector2(highlight.Position.X, labels[moveToIndex].Position.Y + yOffset);
+        var movingTo = new Vector2(highlight.Position.X, labels[moveToIndex].Position.Y - yOffset);
         
         highlight.Position = highlight.Position.MoveToward(
             movingTo,
@@ -54,8 +54,9 @@ public partial class GameMenu : Node, IHandlesInput {
     }
 
     public void HandleInput() {
-        if (Input.IsActionPressed(InputBindings.MenuSelect)) {
-            // todo
+        if (Input.IsActionJustPressed(InputBindings.MenuSelect)) {
+            items[currentSelectionIndex].OnSelected();
+            // todo close menu
         }
         
         if (moveToIndex != -1) return; // Don't change selection if already moving
