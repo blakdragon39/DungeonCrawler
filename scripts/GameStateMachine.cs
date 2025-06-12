@@ -53,12 +53,6 @@ public partial class GameStateMachine : Node3D {
     }
 
     public void ReturnPlayerControl() {
-        ClearState();
         currentState = GameState.PlayerControl;
-    }
-
-    private void ClearState() {
-        inputtables[GameState.Dialog] = null;
-        inputtables[GameState.DungeonMenu] = null;
     }
 }

@@ -10,14 +10,14 @@ public partial class DungeonLevel : GridMap {
     [Signal] public delegate void WalkedOnNewTileEventHandler();
     
     public HashSet<Vector3I> WalkedOnTiles { get; private set; }
-    public List<EnemyNode> Enemies { get; private set; }
+    public List<Enemy> Enemies { get; private set; }
 
     private const int GROUND_LEVEL = -1;
     private const int WALL_LEVEL = 0;
     
     public override void _Ready() {
         WalkedOnTiles = new HashSet<Vector3I>();
-        Enemies = new List<EnemyNode>();
+        Enemies = new List<Enemy>(); // todo find enemies in child nodes
     }
 
     // todo also check other things, like enemies or chests, because grid blocks cannot have scripts
@@ -36,8 +36,17 @@ public partial class DungeonLevel : GridMap {
         }
     }
 
-    public void AddEnemy(EnemyNode enemyNode) {
-        Enemies.Add(enemyNode);
+    public void AddEnemy(Enemy enemy) {
+        Enemies.Add(enemy);
+    }
+
+    public Enemy GetEnemyAt(Vector3I pos) {
+        GD.Print($"Looking at {pos}");
+        foreach (Enemy enemy in Enemies) {
+            GD.Print($"Enemy {enemy.Position}");
+        }
+
+        return Enemies.Find(enemy => enemy.Position.ToVector3I() == pos); // todo this not working?
     }
 
     public List<Direction> GetWallsAroundTile(Vector3 groundTile) {

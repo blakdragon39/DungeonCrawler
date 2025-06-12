@@ -1,5 +1,6 @@
 using DungeonCrawler.scripts.bindings;
 using DungeonCrawler.scripts.components;
+using DungeonCrawler.scripts.party;
 using DungeonCrawler.scripts.resources;
 using Godot;
 using System.Collections.Generic;
@@ -32,20 +33,19 @@ public partial class DungeonMenu : Node, IHandlesInput {
 
     private void SentSelected() {
         StackNewMenu([
-            new MenuItem("Attack", () => GD.Print("Sent Attacked")),
+            new MenuItem("Attack", () => PartyEventBus.Instance.EmitSignal(PartyEventBus.SignalName.SentAttacked)),
             new MenuItem("Defend", () => GD.Print("Sent Defended")),
         ]);
     }
 
     private void NootSelected() {
         StackNewMenu([
-            new MenuItem("Attack", () => GD.Print("Noot Attacked")),
+            new MenuItem("Attack", () => PartyEventBus.Instance.EmitSignal(PartyEventBus.SignalName.NootAttacked)),
             new MenuItem("Defend", () => GD.Print("Noot Defended")),
         ]);
     }
 
     private void StackNewMenu(List<MenuItem> menuItems) {
-        // activeMenus.Peek().SetProcess(false); // todo this isn't hiding it
         activeMenus.Peek().ProcessMode = ProcessModeEnum.Disabled;
         activeMenus.Peek().Visible = false;
         var menu = gameMenuScene.Instantiate<GameMenu>();

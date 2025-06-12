@@ -1,6 +1,7 @@
 using Godot;
 using DungeonCrawler.scripts.bindings;
 using DungeonCrawler.scripts.components;
+using DungeonCrawler.scripts.party;
 using DungeonCrawler.scripts.utils;
 using Vector3 = Godot.Vector3;
 
@@ -12,12 +13,17 @@ public partial class Player : Node3D, IHandlesInput {
     private const float ROTATE_SPEED = 30f;
     
     private Vector3? moveTo;
+
+    private PartyMember sent;
     
     private Rotatable3D rotatable3D;
 
     public override void _Ready() {
         rotatable3D = this.GetChildOfType<Rotatable3D>();
         rotatable3D.Face(Direction.North);
+        sent = new PartyMember();
+
+        PartyEventBus.Instance.SentAttacked += () => AttackWith(sent);
     }
 
     public override void _PhysicsProcess(double delta) {
@@ -74,6 +80,17 @@ public partial class Player : Node3D, IHandlesInput {
     private void HandleMenuInput() {
         if (Input.IsActionJustPressed(InputBindings.OpenMenu)) {
             GameStateMachine.Instance.OpenGameMenu();
+        }
+    }
+
+    private void AttackWith(PartyMember partyMember) {
+        var forwardTile = Position + DirectionUtils.GetForwardTile(rotatable3D.CurDirection);
+        var enemy = GameStateMachine.Instance.CurrentLevel.GetEnemyAt(forwardTile.ToVector3I());
+
+        if (enemy != null) {
+            partyMember.DealDamage(enemy.Damageable);
+        } else {
+            GD.Print("No enemy found");
         }
     }
 }

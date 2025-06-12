@@ -11,7 +11,7 @@ public partial class TriggerTutorialCombatEvent : EventNode {
     [Export] private PackedScene enemyScene;
     
     public override void StartEvent() {
-        var enemyNode = enemyScene.Instantiate<EnemyNode>();
+        var enemyNode = enemyScene.Instantiate<Enemy>();
         enemyNode.Init(enemyResource);
         enemyNode.GetChildOfType<Sprite3D>().Texture = enemyResource.Sprite;
         enemyNode.Position = new Vector3(2.5f, 0.5f, -2.5f);
