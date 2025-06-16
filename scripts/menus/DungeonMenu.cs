@@ -33,15 +33,13 @@ public partial class DungeonMenu : Node, IHandlesInput {
 
     private void SentSelected() {
         StackNewMenu([
-            new MenuItem("Attack", () => PartyEventBus.Instance.EmitSignal(PartyEventBus.SignalName.SentAttacked)),
-            new MenuItem("Defend", () => GD.Print("Sent Defended")),
+            new MenuItem("Attack", () => EmitSignalAndClose(PartyEventBus.SignalName.SentAttacked)),
         ]);
     }
 
     private void NootSelected() {
         StackNewMenu([
-            new MenuItem("Attack", () => PartyEventBus.Instance.EmitSignal(PartyEventBus.SignalName.NootAttacked)),
-            new MenuItem("Defend", () => GD.Print("Noot Defended")),
+            new MenuItem("Attack", () => EmitSignalAndClose(PartyEventBus.SignalName.NootAttacked)),
         ]);
     }
 
@@ -60,6 +58,18 @@ public partial class DungeonMenu : Node, IHandlesInput {
         if (activeMenus.Count > 0) {
             activeMenus.Peek().ProcessMode = ProcessModeEnum.Inherit;
             activeMenus.Peek().Visible = true;
+        } else {
+            GameStateMachine.Instance.ReturnPlayerControl();
         }
+    }
+
+    private void EmitSignalAndClose(StringName signalName) {
+        foreach (GameMenu menu in activeMenus) {
+            menu.QueueFree();
+        }
+        activeMenus.Clear();
+        
+        PartyEventBus.Instance.EmitSignal(signalName);
+        GameStateMachine.Instance.ReturnPlayerControl();
     }
 }
