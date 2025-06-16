@@ -1,6 +1,7 @@
 using Godot;
 using DungeonCrawler.scripts.bindings;
 using DungeonCrawler.scripts.components;
+using DungeonCrawler.scripts.dungeon;
 using DungeonCrawler.scripts.party;
 using DungeonCrawler.scripts.utils;
 using Vector3 = Godot.Vector3;
@@ -8,6 +9,8 @@ using Vector3 = Godot.Vector3;
 namespace DungeonCrawler.scripts;
 
 public partial class Player : Node3D, IHandlesInput {
+
+    [Signal] public delegate void PlayerMovedEventHandler();
     
     private const float MOVE_SPEED = 2.5f;
     private const float ROTATE_SPEED = 30f;
@@ -24,6 +27,8 @@ public partial class Player : Node3D, IHandlesInput {
         sent = new PartyMember();
 
         PartyEventBus.Instance.SentAttacked += () => AttackWith(sent);
+        // todo other party stuff
+        DungeonEventBus.Instance.SetPlayer(this);
     }
 
     public override void _PhysicsProcess(double delta) {
@@ -31,6 +36,7 @@ public partial class Player : Node3D, IHandlesInput {
             Position = Position.MoveToward(moveTo.Value, (float)delta * MOVE_SPEED);
             
             if (Position == moveTo) {
+                EmitSignal(SignalName.PlayerMoved);
                 moveTo = null;
             }
         }

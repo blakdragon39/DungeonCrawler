@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://dfknpf68e4heu" path="res://scripts/Minimap.cs" id="2_cq4me"]
 [ext_resource type="PackedScene" uid="uid://bvoakxmplyars" path="res://scenes/game_menu.tscn" id="2_e13mp"]
 [ext_resource type="Texture2D" uid="uid://b1o18kr5w1tte" path="res://assets/Arrow.png" id="3_6yjpi"]
-[ext_resource type="Script" uid="uid://cahhksvhc82s5" path="res://scripts/DungeonLevel.cs" id="3_ph3nu"]
+[ext_resource type="Script" uid="uid://cahhksvhc82s5" path="res://scripts/dungeon/DungeonLevel.cs" id="3_ph3nu"]
 [ext_resource type="Script" uid="uid://dbt4v3hl5xj4" path="res://scripts/Player.cs" id="4_4kmhl"]
 [ext_resource type="Script" uid="uid://bf68mug28jta0" path="res://scripts/components/Rotatable3D.cs" id="7_wr8iv"]
 [ext_resource type="PackedScene" uid="uid://cllqg5k5vprl4" path="res://scenes/event_trigger_box.tscn" id="8_ckvwl"]

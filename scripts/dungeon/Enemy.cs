@@ -2,7 +2,7 @@ using DungeonCrawler.scripts.components.dungeon;
 using DungeonCrawler.scripts.resources;
 using Godot;
 
-namespace DungeonCrawler.scripts;
+namespace DungeonCrawler.scripts.dungeon;
 
 public partial class Enemy : Node3D {
     
@@ -14,6 +14,7 @@ public partial class Enemy : Node3D {
         resource = newResource;
         Damageable = new Damageable(resource.MaxHealth);
         Damageable.DamageTaken += () => { GD.Print($"Current Health: {Damageable.CurrentHealth}"); };
+        DungeonEventBus.Instance.EnemyTurn += () => { GD.Print("Enemy turn"); };
         // todo health and stats and whatnot
         // todo should rotate to face player when player moves, or when enemy moves
     }

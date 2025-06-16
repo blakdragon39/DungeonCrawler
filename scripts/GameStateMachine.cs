@@ -1,4 +1,5 @@
 using DungeonCrawler.scripts.components;
+using DungeonCrawler.scripts.dungeon;
 using DungeonCrawler.scripts.menus;
 using Godot;
 using System.Collections.Generic;
