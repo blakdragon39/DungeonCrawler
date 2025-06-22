@@ -20,10 +20,10 @@ public partial class DungeonLevel : GridMap {
         Enemies = new List<Enemy>(); // todo find enemies in child nodes
     }
 
-    // todo also check other things, like enemies or chests, because grid blocks cannot have scripts
     public bool CanMoveTo(Vector3I pos) {
-        if (GetCellItem(pos) != InvalidCellItem) return false;
+        // check other blocking items
         if (Enemies.Any(enemy => enemy.Position.ToVector3I() == pos)) return false;
+        if (GetCellItem(new Vector3I(pos.X, GROUND_LEVEL, pos.Z)) == InvalidCellItem) return false;
 
         return true;
     }
@@ -37,6 +37,7 @@ public partial class DungeonLevel : GridMap {
     }
 
     public void AddEnemy(Enemy enemy) {
+        // todo add IBlockMovement?
         Enemies.Add(enemy);
     }
 

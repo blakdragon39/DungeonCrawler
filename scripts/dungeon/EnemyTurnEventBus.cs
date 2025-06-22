@@ -3,9 +3,9 @@ using Godot;
 
 namespace DungeonCrawler.scripts.dungeon;
 
-public partial class DungeonEventBus : Node {
+public partial class EnemyTurnEventBus : Node {
     
-    public static DungeonEventBus Instance { get; private set; }
+    public static EnemyTurnEventBus Instance { get; private set; }
 
     [Signal] public delegate void EnemyTurnEventHandler();
     

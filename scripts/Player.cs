@@ -28,7 +28,7 @@ public partial class Player : Node3D, IHandlesInput {
 
         PartyEventBus.Instance.SentAttacked += () => AttackWith(sent);
         // todo other party stuff
-        DungeonEventBus.Instance.SetPlayer(this);
+        EnemyTurnEventBus.Instance.SetPlayer(this);
     }
 
     public override void _PhysicsProcess(double delta) {
