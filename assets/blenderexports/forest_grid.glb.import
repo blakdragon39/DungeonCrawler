@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://dyp364ifbvbv0"
-path="res://.godot/imported/environment.glb-7fe86bd184340447bb6920ce0e7088fc.scn"
+uid="uid://buo7h3rdc734s"
+path="res://.godot/imported/forest_grid.glb-d7bce0e736d21611a447eb382ef39d9d.scn"
 
 [deps]
 
-source_file="res://assets/environment.glb"
-dest_files=["res://.godot/imported/environment.glb-7fe86bd184340447bb6920ce0e7088fc.scn"]
+source_file="res://assets/blenderexports/forest_grid.glb"
+dest_files=["res://.godot/imported/forest_grid.glb-d7bce0e736d21611a447eb382ef39d9d.scn"]
 
 [params]
 
