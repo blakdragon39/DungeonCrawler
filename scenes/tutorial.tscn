@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://ts4kl3ey3w35" path="res://scripts/GameStateMachine.cs" id="1_8ho6b"]
 [ext_resource type="Script" uid="uid://dfknpf68e4heu" path="res://scripts/Minimap.cs" id="2_cq4me"]
 [ext_resource type="PackedScene" uid="uid://bvoakxmplyars" path="res://scenes/game_menu.tscn" id="2_e13mp"]
+[ext_resource type="MeshLibrary" uid="uid://bq161q1xa0m0o" path="res://assets/forest_grid.tres" id="2_vrdqu"]
 [ext_resource type="Texture2D" uid="uid://b1o18kr5w1tte" path="res://assets/Arrow.png" id="3_6yjpi"]
 [ext_resource type="Script" uid="uid://dbt4v3hl5xj4" path="res://scripts/Player.cs" id="4_4kmhl"]
 [ext_resource type="Script" uid="uid://bf68mug28jta0" path="res://scripts/components/Rotatable3D.cs" id="7_wr8iv"]
@@ -14,7 +15,6 @@
 [ext_resource type="PackedScene" uid="uid://bgg4v642ow4ks" path="res://scenes/enemy.tscn" id="12_tbcdj"]
 [ext_resource type="Resource" uid="uid://dup78wkp8nlg4" path="res://enemies/tutorial_thug.tres" id="13_e13mp"]
 [ext_resource type="Resource" uid="uid://cx8o0j5bhs2b6" path="res://assets/dialog/tutorial_thug_speaks.dialogue" id="14_0hilk"]
-[ext_resource type="MeshLibrary" uid="uid://b2uy306w145lo" path="res://assets/forest_grid.tres" id="16_e13mp"]
 [ext_resource type="Script" uid="uid://cahhksvhc82s5" path="res://scripts/dungeon/DungeonLevel.cs" id="17_cmspm"]
 [ext_resource type="Script" uid="uid://cckv3yr252m6l" path="res://scripts/menus/DungeonMenu.cs" id="17_vrdqu"]
 
@@ -27,10 +27,10 @@ player = NodePath("Player")
 dungeonMenu = NodePath("DungeonMenu")
 
 [node name="Level" type="GridMap" parent="."]
-mesh_library = ExtResource("16_e13mp")
+mesh_library = ExtResource("2_vrdqu")
 cell_size = Vector3(1, 1, 1)
 data = {
-"cells": PackedInt32Array(-65536, 0, 0, -65536, 65535, 0, -65536, 65534, 0, -65536, 65533, 0, -65535, 65533, 0, -65534, 65533, 0, -65533, 65533, 0, -65532, 65533, 0, -65532, 65532, 0, -65532, 65531, 0, -65532, 65530, 0, -65532, 65529, 0, -65533, 65529, 0, -65534, 65529, 0, -65535, 65529, 0, -65535, 65528, 0, -65535, 65527, 0, -65531, 65533, 0, -65531, 65534, 0, -65531, 65535, 0, -65530, 65535, 0, -65529, 65535, 0, -65528, 65535, 0, -65528, 65534, 0, -65528, 65533, 0, -65528, 65532, 0, -65528, 65531, 0, 65535, 0, 3, 65535, 65533, 3, 0, 65528, 3, 7, 65532, 3, 65535, 65535, 1, 0, 65529, 1, 7, 65533, 1, 65535, 65534, 2, 7, 65531, 2, 0, 65527, 4, 0, 65532, 1441796, 3, 65528, 1441796, 6, 65533, 655363, 5, 65531, 655363, 5, 65530, 655363, 2, 65527, 655363, 1, 65535, 655361, 9, 65535, 655361, 9, 65531, 655361, 1, 0, 655365, 9, 65534, 655365, 5, 65529, 655364, 0, 1, 1048578, 5, 0, 1048578, 2, 65530, 1048578, 6, 0, 1048580, 3, 65530, 1048580, 7, 0, 1048581, 8, 0, 1048581, 1, 65530, 1048581, 2, 65534, 1048581, 3, 65534, 1048579, 3, 65531, 1, 1, 65532, 1441796, 1, 65526, 1441796, 2, 65532, 1441797, 65535, 1, 6, 1, 1, 1048582, 65535, 65532, 1441798, 4, 0, 6, 9, 0, 1048582, 9, 65530, 655366, 7, 65530, 1441798, 0, 65526, 1441798, 2, 65526, 655366, 0, 65530, 6, 4, 65528, 1441794, 5, 65528, 655366, 9, 65532, 655365, 9, 65533, 655364)
+"cells": PackedInt32Array(-65536, 0, 0, -65536, 65535, 0, -65536, 65534, 0, -65536, 65533, 0, -65535, 65533, 0, -65534, 65533, 0, -65533, 65533, 0, -65532, 65533, 0, -65532, 65532, 0, -65532, 65531, 0, -65532, 65530, 0, -65532, 65529, 0, -65533, 65529, 0, -65534, 65529, 0, -65535, 65529, 0, -65535, 65528, 0, -65535, 65527, 0, -65531, 65533, 0, -65531, 65534, 0, -65531, 65535, 0, -65530, 65535, 0, -65529, 65535, 0, -65528, 65535, 0, -65528, 65534, 0, -65528, 65533, 0, -65528, 65532, 0, -65528, 65531, 0, 65535, 0, 3, 65535, 65533, 3, 0, 65528, 3, 7, 65532, 3, 65535, 65535, 1, 0, 65529, 1, 7, 65533, 1, 65535, 65534, 2, 7, 65531, 2, 0, 65527, 4, 0, 65532, 1441796, 3, 65528, 1441796, 6, 65533, 655363, 5, 65531, 655363, 5, 65530, 655363, 2, 65527, 655363, 1, 65535, 655361, 9, 65535, 655361, 9, 65531, 655361, 1, 0, 655365, 9, 65534, 655365, 5, 65529, 655364, 0, 1, 1048578, 5, 0, 1048578, 2, 65530, 1048578, 6, 0, 1048580, 7, 0, 1048581, 8, 0, 1048581, 1, 65530, 1048581, 2, 65534, 1048581, 3, 65534, 1048579, 3, 65531, 1, 1, 65532, 1441796, 1, 65526, 1441796, 2, 65532, 1441797, 65535, 1, 6, 1, 1, 1048582, 65535, 65532, 1441798, 4, 0, 6, 9, 0, 1048582, 9, 65530, 655366, 7, 65530, 1441798, 0, 65526, 1441798, 2, 65526, 655366, 0, 65530, 6, 4, 65528, 1441794, 5, 65528, 655366, 9, 65532, 655365, 9, 65533, 655364, 4, 65535, 3, 8, 65530, 1441793, 6, 65532, 655366, 1, 65534, 1048583, 4, 65534, 7, 5, 65532, 655367, 3, 65532, 1441799, 3, 65530, 7, 2, 65528, 655367, 6, 65534, 655367, 7, 65534, 1441799)
 }
 script = ExtResource("17_cmspm")
 metadata/_editor_floor_ = Vector3(0, 0, 0)
@@ -94,7 +94,6 @@ script = ExtResource("7_wr8iv")
 [node name="TutorialEventTrigger" parent="EventTriggers" instance=ExtResource("8_ckvwl")]
 process_mode = 4
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, -2.5)
-visible = false
 
 [node name="TutorialEvent1" type="Node" parent="EventTriggers/TutorialEventTrigger"]
 script = ExtResource("8_ej4tf")
@@ -102,8 +101,8 @@ dialogScene = ExtResource("9_nlqja")
 dialogResource = ExtResource("10_g2equ")
 
 [node name="TriggerCombatEvent" parent="EventTriggers" instance=ExtResource("8_ckvwl")]
+process_mode = 4
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, -2.5)
-visible = false
 
 [node name="TriggerCombat" type="Node" parent="EventTriggers/TriggerCombatEvent"]
 script = ExtResource("11_tbcdj")
